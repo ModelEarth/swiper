@@ -5,16 +5,14 @@ import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import styles from "./MySwiper.module.css";
-import { EffectCoverflow, Navigation, Pagination } from "swiper/modules";
+import styles from "./SwiperLoop.module.css";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
 
 export default function MySwiper() {
-
   const [images, setImages] = useState([]);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(1);
   const swiperRef = useRef(null);
 
-  // Fetch the NASA API
   useEffect(() => {
     const initializeHash = () => {
       const hashParams = new URLSearchParams(window.location.hash.substring(1));
@@ -23,8 +21,7 @@ export default function MySwiper() {
 
       console.log(`Initial hash params - feed: ${feed}, scene: ${scene}`);
       window.history.replaceState(null, null, '#feed=nasa&scene=1');
-      setActiveIndex(1);
-      // if (!feed || isNaN(scene) || scene < 1 || scene > 5) {
+      // if (!feed || isNaN(scene) || scene < 1 || scene > 11) {
       //   window.history.replaceState(null, null, '#feed=nasa&scene=1');
       // } else {
       //   console.log(`Setting activeIndex to ${scene}`);
@@ -32,11 +29,11 @@ export default function MySwiper() {
       // }
     };
     
-    initializeHash(); //Initialize the url
+    initializeHash();
 
     const fetchImages = async () => {
       try {
-        const response = await fetch('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&hd=True&count=5');
+        const response = await fetch('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&hd=True&count=11');
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -50,15 +47,14 @@ export default function MySwiper() {
     fetchImages();
   }, []);
 
-  // Update the slide from the url. Now you can change the scene in the url and it will go to that slide.
   useEffect(() => {
     const handleHashChange = () => {
       const hashParams = new URLSearchParams(window.location.hash.substring(1));
       const scene = parseInt(hashParams.get('scene'), 10);
-      if (!isNaN(scene) && scene > 0 && scene < 6 && swiperRef.current) {
-        swiperRef.current.swiper.slideTo(scene - 1);
+      if (!isNaN(scene) && scene > 0 && scene < 12 && swiperRef.current) {
+        swiperRef.current.swiper.slideToLoop(scene - 1);
       } else {
-        swiperRef.current.swiper.slideTo(0);
+        swiperRef.current.swiper.slideToLoop(0);
       }
     };
     window.addEventListener('hashchange', handleHashChange);
@@ -67,25 +63,18 @@ export default function MySwiper() {
     };
   }, []);
 
-  // // Set the hash to 1 on page load or reload
-  // useEffect(() => {
-  //   window.location.hash = '#feed=nasa&scene=1';
-  //   setActiveIndex(1);  // Set activeIndex to 1 on initial load or reload
-  // }, []);
-  
-  // Update the url on changing slide
   const handleSlideChange = (swiper) => {
-    const index = swiper.realIndex + 1; // Add 1 since index starts from 0
+    const index = swiper.realIndex + 1;
     setActiveIndex(index);
     window.history.replaceState(null, null, `#feed=nasa&scene=${index}`);
+  // Send message to parent window with activeIndex
+    window.parent.postMessage({ activeIndex: index, source: 'swiper' }, '*');
   };
 
-  // Notes down the index of the slider
   useEffect(() => {
     console.log(`activeIndex updated: ${activeIndex}`);
   }, [activeIndex]);
 
-  // For videos this will be the configuration as grabbing is not allowed for it
   useEffect(() => {
     const handleIframeInteraction = () => {
       document.querySelectorAll('.swiper-slide iframe').forEach(iframe => {
@@ -102,30 +91,39 @@ export default function MySwiper() {
   }, [images]);
 
   return (
-    <div className="styles.swiperContainer">
+    <div>
       <Swiper
-        effect={"coverflow"}
         grabCursor={true}
-        rewind = {true}
+        loop={images.length > 3}
+        initialSlide = {0}
         centeredSlides={true}
-        slidesPerView={"auto"}
-        coverflowEffect={{
-          rotate: 40,
-          stretch: 0,
-          depth: 100,
-          modifier: 1,
-          slideShadows: false,
+        slidesPerView={6}
+        slidesPerGroup={1}
+        autoplay={{
+          delay: 10000,
+          disableOnInteraction: false,
         }}
-        modules={[EffectCoverflow, Navigation, Pagination]}
-        spaceBetween={50}
+        breakpoints={{
+          1024: {
+            slidesPerView: 6,
+          },
+          600: {
+            slidesPerView: 4,
+          },
+          480: {
+            slidesPerView: 3,
+          },
+          320: {
+            slidesPerView: 2,
+          }
+        }}
+        modules={[Autoplay, Navigation, Pagination]}
         navigation={true}
         pagination={{
           clickable: true,
         }}
         onSlideChange={handleSlideChange}
-        className={styles.mySwiper}
-        initialSlide={0} //Set initialSlide = {2} if you want to show swiper in the middle slide by default
-        slidesPerGroup={1}
+        className={styles.swiperLoop}
         ref={swiperRef}
       >
         {images.map((image, index) => (
