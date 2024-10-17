@@ -4,6 +4,8 @@
 
 View slider at [dreamstudio.com/swiper/dist](https://dreamstudio.com/swiper/dist/) and slider loop at [dreamstudio.com/swiper/dist/loop.html](https://dreamstudio.com/swiper/dist/loop.html)
 
+And view the swiper on the [FeedPlayer](https://model.earth/feed)
+
 To host locally, make a webroot folder that contains the [model.earth](https://model.earth) localsite and home repo.
 
 	git clone https://github.com/ModelEarth/swiper.git
