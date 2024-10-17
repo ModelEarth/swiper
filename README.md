@@ -2,12 +2,14 @@
 
 ## Localsite for Model.earth Dev
 
-View slider at [localhost:8887/swiper/dist/](http://localhost:8887/swiper/dist/) and slider loop at [localhost:8887/swiper/dist/](http://localhost:8887/swiper/dist/loop.html)after [starting your localsite](https://model.earth/localsite/start/steps/).
+View slider at [dreamstudio.com/swiper/dist](https://dreamstudio.com/swiper/dist/) and slider loop at [dreamstudio.com/swiper/dist](https://dreamstudio.com/swiper/dist/loop.html)
 
-If you want to host it locally, make a webroot folder that contains the localsite and home repo.
+To host locally, make a webroot folder that contains the [model.earth](https://model.earth) localsite and home repo.
 
 	git clone https://github.com/ModelEarth/swiper.git
 	yarn
+
+[Starting your localsite](https://dreamstudio.com/localsite/start/steps/).
 
 If you want to make changes, do so in src/components/MySwiper or in src/components/SwiperLoop, run the below command and push changes to the repository for hosting on Github Pages.
 
