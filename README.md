@@ -2,7 +2,7 @@
 
 ## Localsite for Model.earth Dev
 
-View slider at [dreamstudio.com/swiper/dist](https://dreamstudio.com/swiper/dist/) and slider loop at [dreamstudio.com/swiper/dist](https://dreamstudio.com/swiper/dist/loop.html)
+View slider at [dreamstudio.com/swiper/dist](https://dreamstudio.com/swiper/dist/) and slider loop at [dreamstudio.com/swiper/dist/loop.html](https://dreamstudio.com/swiper/dist/loop.html)
 
 To host locally, make a webroot folder that contains the [model.earth](https://model.earth) localsite and home repo.
 
