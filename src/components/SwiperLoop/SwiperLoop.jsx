@@ -127,7 +127,7 @@ export default function SwiperLoop({ images }) {
       >
         {images.map((image, index) => (
           <SwiperSlide key={index} className={styles.swiperSlide}>
-              <a href={image.url} target="_blank" rel="noopener noreferrer" onClick={sendUrl}>
+              <a href={image.url} target="_blank" rel="noopener noreferrer" onClick={() => sendUrl(swiperRef.current.swiper)}>
                 {image.media_type === 'video' ? (
                   <iframe src={image.url} title={image.title} allowFullScreen />
                 ) : (
