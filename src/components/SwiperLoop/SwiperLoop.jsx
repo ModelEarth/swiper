@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useRef, useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -9,8 +10,7 @@ import styles from "./SwiperLoop.module.css";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { handleIframeInteraction } from "../../utils/utils";
 
-export default function SwiperLoop() {
-  const [images, setImages] = useState([]);
+export default function SwiperLoop({ images }) {
   const [activeIndex, setActiveIndex] = useState(1);
   const swiperRef = useRef(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -42,21 +42,6 @@ export default function SwiperLoop() {
     };
     
     initializeHash();
-    // api_key = 7BdaDaLN7EHQyb8Db3NDkE1dPSniiIG2oE0wvt64
-    const fetchImages = async () => {
-      try {
-        const response = await fetch('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&hd=True&count=11');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setImages(data);
-      } catch (error) {
-        console.error('Failed to fetch images: ' + error);
-      }
-    };
-
-    fetchImages();
   }, []);
 
   useEffect(() => {
@@ -80,6 +65,11 @@ export default function SwiperLoop() {
     setActiveIndex(index);
     window.history.replaceState(null, null, `#feed=nasa&scene=${index}`);
   };
+
+  const sendUrl = (swiper) => {
+    const index = swiper.realIndex + 1;
+    window.parent.postMessage({ activeIndex: index, source: 'loop' }, '*');
+  }
 
   useEffect(() => {
     console.log(`activeIndex updated: ${activeIndex}`);
@@ -137,7 +127,7 @@ export default function SwiperLoop() {
       >
         {images.map((image, index) => (
           <SwiperSlide key={index} className={styles.swiperSlide}>
-              <a href={image.url} target="_blank" rel="noopener noreferrer">
+              <a href={image.url} target="_blank" rel="noopener noreferrer" onClick={sendUrl}>
                 {image.media_type === 'video' ? (
                   <iframe src={image.url} title={image.title} allowFullScreen />
                 ) : (
