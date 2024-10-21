@@ -1,10 +1,10 @@
-import SwiperLoop from './components/SwiperLoop/SwiperLoop';
 import './App.css';
+import Loop from './components/MainSwiper/Loop'
 
 export default function LoopApp() {
     return (
       <>
-        <SwiperLoop/>
+        <Loop/>
       </>
     );
   }

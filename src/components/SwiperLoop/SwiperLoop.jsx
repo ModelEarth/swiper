@@ -66,9 +66,8 @@ export default function SwiperLoop({ images }) {
     window.history.replaceState(null, null, `#feed=nasa&scene=${index}`);
   };
 
-  const sendUrl = (swiper) => {
-    const index = swiper.realIndex + 1;
-    window.parent.postMessage({ activeIndex: index, source: 'loop' }, '*');
+  const sendUrl = () => {
+    window.parent.postMessage({ url: window.location.hash, source: 'loop' }, '*');
   }
 
   useEffect(() => {
@@ -127,7 +126,7 @@ export default function SwiperLoop({ images }) {
       >
         {images.map((image, index) => (
           <SwiperSlide key={index} className={styles.swiperSlide}>
-              <a href={image.url} target="_blank" rel="noopener noreferrer" onClick={() => sendUrl(swiperRef.current.swiper)}>
+              <a href={image.url} target="_blank" rel="noopener noreferrer" onClick={() => sendUrl()}>
                 {image.media_type === 'video' ? (
                   <iframe src={image.url} title={image.title} allowFullScreen />
                 ) : (
