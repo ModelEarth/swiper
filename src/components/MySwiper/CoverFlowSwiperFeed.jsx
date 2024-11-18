@@ -1,29 +1,16 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
-import React, { useRef, useState, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import "swiper/css/effect-coverflow";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import styles from "./SwiperLoop.module.css";
-import { Navigation, Pagination } from "swiper/modules";
+import styles from "./CoverSwiper.module.css";
+import { EffectCoverflow, Navigation, Pagination } from "swiper/modules";
 import { allowedOrigins, handleIframeInteraction } from "../../utils/utils";
 
-export default function SwiperLoop({ images }) {
+export default function CoverFlowSwiperFeed({ images }) {
   const swiperRef = useRef(null);
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
-  useEffect(() => {
-    const checkDarkMode = () =>
-      setIsDarkMode(window.parent.document.body.classList.contains("dark"));
-    checkDarkMode();
-    const observer = new MutationObserver(checkDarkMode);
-    observer.observe(window.parent.document.body, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
-    return () => observer.disconnect();
-  }, []);
 
   useEffect(() => {
     const handlePostMessage = (event) => {
@@ -44,7 +31,7 @@ export default function SwiperLoop({ images }) {
 
   const handleSlideClick = (index) => {
     const newIndex = index + 1;
-    console.log("Slide clicked, real index:", newIndex); // Debug log
+    console.log("Slide clicked, real index:", newIndex); 
     if (swiperRef.current.swiper) swiperRef.current.swiper.slideToLoop(index);
     window.parent.postMessage({ index: newIndex, source: "loop" }, "*");
   };
@@ -54,34 +41,28 @@ export default function SwiperLoop({ images }) {
   }, [images]);
 
   return (
-    <div
-      className={`${styles.swiperLoopContainer} ${
-        isDarkMode ? styles.dark : ""
-      }`}
-    >
+    <div className={styles.swiperContainer}>
       <Swiper
+        effect={"coverflow"}
         grabCursor={true}
-        loop={images.length > 7}
-        initialSlide={0}
+        loop={images.length > 3}
         centeredSlides={true}
-        slidesPerView={8}
-        slidesPerGroup={1}
-        spaceBetween={10}
-        breakpoints={{
-          1200: { slidesPerView: 8 },
-          1024: { slidesPerView: 7 },
-          800: { slidesPerView: 6 },
-          650: { slidesPerView: 5 },
-          550: { slidesPerView: 4 },
-          425: { slidesPerView: 3 },
-          320: { slidesPerView: 2 },
+        slidesPerView={"auto"}
+        coverflowEffect={{
+          rotate: 40,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows: false,
         }}
-        modules={[Navigation, Pagination]}
+        modules={[EffectCoverflow, Navigation, Pagination]}
+        spaceBetween={50}
         navigation={true}
         pagination={{
           clickable: true,
         }}
-        className={styles.swiperLoop}
+        className={styles.mySwiper}
+        slidesPerGroup={1}
         ref={swiperRef}
       >
         {images.map((image, index) => (
