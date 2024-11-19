@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import MiniCoverflowSwiperFeed from "../MySwiper/MiniCoverflowSwiperFeed";
 import CoverFlowSwiperFeed from "../MySwiper/CoverFlowSwiperFeed";
-import styles from "../MySwiper/CoverSwiper.module.css";
+import styles from "../MySwiper/MySwiper.module.css";
 
 export default function CoverFlowSwiper() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 800);

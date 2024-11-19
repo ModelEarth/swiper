@@ -12,22 +12,7 @@ import { handleIframeInteraction } from "../../utils/utils";
 export default function MiniSwiper({ images }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const swiperRef = useRef(null);
-  const [isDarkMode, setIsDarkMode] = useState(false);
 
-  useEffect(() => {
-    const checkDarkMode = () =>
-      setIsDarkMode(window.parent.document.body.classList.contains("dark"));
-    // Initial check
-    checkDarkMode();
-    const observer = new MutationObserver(checkDarkMode);
-    observer.observe(window.parent.document.body, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
-    return () => observer.disconnect();
-  }, []);
-
-  // Fetch the NASA API
   useEffect(() => {
     const initializeHash = () => {
       const hashParams = new URLSearchParams(window.location.hash.substring(1));
@@ -37,7 +22,6 @@ export default function MiniSwiper({ images }) {
       window.history.replaceState(null, null, "#feed=nasa&scene=1");
       setActiveIndex(1);
     };
-
     initializeHash(); //Initialize the url
   }, []);
 
@@ -71,9 +55,7 @@ export default function MiniSwiper({ images }) {
   }, [images]);
 
   return (
-    <div
-      className={`${styles.swiperContainer} ${isDarkMode ? styles.dark : ""}`}
-    >
+    <div className={styles.swiperContainer}>
       <Swiper
         effect={"slide"}
         grabCursor={true}

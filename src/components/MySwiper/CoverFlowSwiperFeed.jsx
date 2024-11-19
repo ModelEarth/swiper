@@ -5,7 +5,7 @@ import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import styles from "./CoverSwiper.module.css";
+import styles from "./MySwiper.module.css";
 import { EffectCoverflow, Navigation, Pagination } from "swiper/modules";
 import { allowedOrigins, handleIframeInteraction } from "../../utils/utils";
 

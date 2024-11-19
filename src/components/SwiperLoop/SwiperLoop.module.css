@@ -4,7 +4,7 @@
   position: relative;
   width: 100%;
   padding-top: 50px;
-  padding-bottom: 50px; 
+  padding-bottom: 50px;
   height: 200px;
 }
 
@@ -18,7 +18,8 @@
   height: 120px;
 }
 
-.swiperSlide img, .swiperSlide iframe {
+.swiperSlide img,
+.swiperSlide iframe {
   margin-top: 10px;
   display: block;
   width: 100%;
@@ -31,7 +32,8 @@
 .swiperSlide p {
   text-align: center;
   margin-top: 10px;
-  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
   font-size: 0.85rem;
 }
 
@@ -52,24 +54,16 @@
   opacity: 0.5;
 }
 
-/* Custom Styles */
-/* Adjust this value to position the pagination */
-/* .swiperLoop :global(.swiper-pagination) {
-  position: absolute;
-  top: 300px; 
-  left: 0;
-  right: 0;
-} */
-
 .swiperLoop :global(.swiper-pagination) {
   position: absolute;
   text-align: center;
   margin-bottom: 40px;
 }
 
-.swiperLoop :global(.swiper-button-next), .swiperLoop :global(.swiper-button-prev) {
+.swiperLoop :global(.swiper-button-next),
+.swiperLoop :global(.swiper-button-prev) {
   position: absolute;
-  color: black; 
+  color: black;
   background-color: #ffffff50;
   width: 2rem;
   height: 2rem;
@@ -79,12 +73,13 @@
   cursor: pointer;
 }
 
-.swiperLoop :global(.swiper-button-next:hover), .swiperLoop :global(.swiper-button-prev:hover) {
+.swiperLoop :global(.swiper-button-next:hover),
+.swiperLoop :global(.swiper-button-prev:hover) {
   background-color: #ffffff80;
 }
 
-
-.swiperLoop :global(.swiper-button-next::after), .swiperLoop :global(.swiper-button-prev::after) {
+.swiperLoop :global(.swiper-button-next::after),
+.swiperLoop :global(.swiper-button-prev::after) {
   font-size: 15px;
 }
 
@@ -92,88 +87,13 @@
   color: white;
 }
 
-.dark .swiperLoop :global(.swiper-button-next), .dark .swiperLoop :global(.swiper-button-prev) {
+.dark .swiperLoop :global(.swiper-button-next),
+.dark .swiperLoop :global(.swiper-button-prev) {
   color: white;
   background-color: rgba(0, 0, 0, 0.8);
 }
 
-.dark .swiperLoop :global(.swiper-button-next:hover), .dark .swiperLoop :global(.swiper-button-prev:hover) {
+.dark .swiperLoop :global(.swiper-button-next:hover),
+.dark .swiperLoop :global(.swiper-button-prev:hover) {
   background-color: rgba(0, 0, 0, 0.5);
 }
-
-
-/* Responsiveness in smaller screens */
-/* @media screen and (max-width: 1089px) {
-  .swiperSlide {
-    height: 400px;
-  }
-}
-
-@media screen and (max-width: 376px) {
-  .swiperSlide {
-    height: 320px;
-  }
-}
-
-@media screen and (max-width: 350px) {
-  .swiperSlide {
-    height: 300px;
-  }
-} */
-
-/* @media screen and (max-width: 2560px) and (min-width: 2300px) {
-  .swiperSlide {
-    height: 300px;
-  }
-
-  .swiperLoop :global(.swiper-pagination) {
-    top: 400px
-  }
-}
-
-@media screen and (max-width: 2300px) and (min-width: 2150px) {
-  .swiperSlide {
-    height: 275px;
-  }
-
-  .swiperLoop :global(.swiper-pagination) {
-    top: 370px;
-  }
-}
-
-@media screen and (max-width: 2150px) and (min-width: 1950px) {
-  .swiperSlide {
-    height: 250px;
-  }
-
-  .swiperLoop :global(.swiper-pagination) {
-    top: 350px;
-  }
-}
-
-@media screen and (max-width: 1950px) and (min-width: 1750px) {
-  .swiperSlide {
-    height: 220px;
-  }
-
-  .swiperLoop :global(.swiper-pagination) {
-    top: 320px;
-  }
-}
-
-@media screen and (max-width: 1750px) {
-  .swiperSlide {
-    height: 200px;
-  }
-
-  .swiperLoop :global(.swiper-pagination) {
-    top: 300px;
-  }
-}
-
-
-@media screen and (max-width: 800px) {
-  .swiperSlide {
-    height: 90px;
-  }
-} */
