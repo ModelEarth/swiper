@@ -4,8 +4,12 @@
   position: relative;
   width: 100%;
   padding-top: 50px;
-  padding-bottom: 50px; 
+  padding-bottom: 50px;
   height: 200px;
+}
+
+.dark .swiperLoop {
+  background-color: #444;
 }
 
 .swiperSlide {
@@ -14,11 +18,13 @@
   height: 120px;
 }
 
-.swiperSlide img, .swiperSlide iframe {
+.swiperSlide img,
+.swiperSlide iframe {
   margin-top: 10px;
   display: block;
   width: 100%;
   height: 100%;
+  border-radius: 10%;
   /* object-fit: cover; */
   /* object-fit: contain; */
 }
@@ -26,7 +32,9 @@
 .swiperSlide p {
   text-align: center;
   margin-top: 10px;
-  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-size: 0.85rem;
 }
 
 .swiperSlide:hover {
@@ -46,43 +54,46 @@
   opacity: 0.5;
 }
 
-/* Custom Styles */
 .swiperLoop :global(.swiper-pagination) {
   position: absolute;
-  top: 230px; /* Adjust this value to position the pagination */
-  left: 0;
-  right: 0;
+  text-align: center;
+  margin-bottom: 40px;
 }
 
-.swiperLoop :global(.swiper-button-next), .swiperLoop :global(.swiper-button-prev) {
-  color: white; 
-  background-color: rgba(0, 0, 0, 0.5);
+.swiperLoop :global(.swiper-button-next),
+.swiperLoop :global(.swiper-button-prev) {
+  position: absolute;
+  color: black;
+  background-color: #ffffff50;
   width: 2rem;
   height: 2rem;
-  bottom: 300px;
-  top: calc(52% - 1rem); /* Center vertically */
+  top: 48%; /* Center the buttons vertically */
   transform: translateY(-50%);
+  z-index: 10; /* Ensure buttons stay above the slides */
+  cursor: pointer;
 }
 
-.swiperLoop :global(.swiper-button-next::after), .swiperLoop :global(.swiper-button-prev::after) {
+.swiperLoop :global(.swiper-button-next:hover),
+.swiperLoop :global(.swiper-button-prev:hover) {
+  background-color: #ffffff80;
+}
+
+.swiperLoop :global(.swiper-button-next::after),
+.swiperLoop :global(.swiper-button-prev::after) {
   font-size: 15px;
 }
 
-/* Responsiveness in smaller screens */
-/* @media screen and (max-width: 1089px) {
-  .swiperSlide {
-    height: 400px;
-  }
+.dark .swiperSlide p {
+  color: white;
 }
 
-@media screen and (max-width: 376px) {
-  .swiperSlide {
-    height: 320px;
-  }
+.dark .swiperLoop :global(.swiper-button-next),
+.dark .swiperLoop :global(.swiper-button-prev) {
+  color: white;
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
-@media screen and (max-width: 350px) {
-  .swiperSlide {
-    height: 300px;
-  }
-} */
+.dark .swiperLoop :global(.swiper-button-next:hover),
+.dark .swiperLoop :global(.swiper-button-prev:hover) {
+  background-color: rgba(0, 0, 0, 0.5);
+}

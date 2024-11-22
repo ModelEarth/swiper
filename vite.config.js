@@ -16,6 +16,7 @@ export default defineConfig({
       input: {
         swiper: './swiper.html',
         loop: './loop.html',
+        feedmain: './feedmain.html',
       },
       output: {
         assetFileNames: 'assets/[name].[ext]',

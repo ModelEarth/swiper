@@ -1,17 +1,15 @@
-/* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from "react";
-import MySwiper from "../MySwiper/MySwiper";
-import MiniSwiper from "../MySwiper/MiniSwiper";
+import { useState, useEffect } from "react";
+import MiniCoverflowSwiperFeed from "../MySwiper/MiniCoverflowSwiperFeed";
+import CoverFlowSwiperFeed from "../MySwiper/CoverFlowSwiperFeed";
 import styles from "../MySwiper/MySwiper.module.css";
 
-export default function MainSwiper() {
+export default function CoverFlowSwiper() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 800);
-  const [images, setImages] = useState([]);  
+  const [images, setImages] = useState([]);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
-    const checkDarkMode = () =>
-      setIsDarkMode(window.parent.document.body.classList.contains("dark"));
+    const checkDarkMode = () => setIsDarkMode(window.parent.document.body.classList.contains("dark"));
     checkDarkMode();
     const observer = new MutationObserver(checkDarkMode);
     observer.observe(window.parent.document.body, {
@@ -31,7 +29,7 @@ export default function MainSwiper() {
     const fetchImages = async () => {
       try {
         const response = await fetch(
-          "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&hd=True&count=10"
+          "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&hd=True&count=18"
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -46,8 +44,12 @@ export default function MainSwiper() {
   }, []);
 
   return (
-    <div className={`${isDarkMode ? styles.dark : ""}`}>
-      {isMobile ? <MiniSwiper images={images} /> : <MySwiper images={images} />}
+    <div className={`${isDarkMode ? styles.dark : ''}`}>
+      {isMobile ? (
+        <MiniCoverflowSwiperFeed images={images} />
+      ) : (
+        <CoverFlowSwiperFeed images={images} />
+      )}
     </div>
   );
 }
