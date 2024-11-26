@@ -15,3 +15,59 @@
 
 // Send message to parent window with activeIndex
 // window.parent.postMessage({ activeIndex: index, source: 'swiper' }, '*');
+
+// const mediaUpdateEvent = new CustomEvent('mediaUpdate', {
+//     detail: {
+//       url: url || "url not found",
+//       title: title || "title not found",
+//       explanation: explanation || "explanation not found",
+//     }
+//   });
+//   window.dispatchEvent(mediaUpdateEvent);
+
+// const [mediaDetails, setMediaDetails] = useState({
+//     url: '',
+//     title: '',
+//     explanation: '',
+//   });
+// useEffect(() => {
+//     const handleMediaUpdate = (event) => {
+//         // Verify that we received valid data
+//         if (event.detail) {
+//             setMediaDetails(event.detail);
+//             console.log('Received media update:', event.detail);
+//             // Pause current playback
+//             if (isPlaying) {
+//                 pause();
+//             }
+//         }
+//     };
+//     // Listen for the custom event instead of message event
+//     window.addEventListener('mediaUpdate', handleMediaUpdate);
+//     return () => window.removeEventListener('mediaUpdate', handleMediaUpdate);
+// }, []);
+
+// // Handle external media updates
+// useEffect(() => {
+//     if (mediaDetails) {
+//         // Update current media with the external data
+//         setCurrentMedia(mediaDetails);
+//         setMediaDetails({
+//             url: '',
+//             title: '',
+//             explanation: '',
+//         });
+//         // Reset playback state
+//         setCurrentTimeSec(0);
+//         setCurrentTime([0, 0]);
+//         setImageElapsed(0);
+//         setIsPlaying(false);
+//         // If autoplay is enabled, start playing the new media
+//         if (autoplay) {
+//             play();
+//         }
+//     }
+// }, [mediaDetails, autoplay]);
+
+// // Dispatch custom event with data
+// window.dispatchEvent(new CustomEvent('passData', { detail: { url, title, explanation  }}));

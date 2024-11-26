@@ -17,7 +17,18 @@ export default function MiniCoverflowSwiperFeed({ images }) {
         const { action, scene } = event.data;
         if (action === "changeSlide" && !isNaN(scene)) {
           const swiper = swiperRef.current.swiper;
-          console.log("Scene: " + scene);
+          const image = images[scene - 1];
+          if (image) {
+            window.parent.postMessage(
+              {
+                url: image.url,
+                title: image.title,
+                explanation: image.explanation,
+                source: "feedmain",
+              },
+              "*"
+            );
+          }
           if (scene > 0 && scene <= 18 && swiperRef.current)
             swiper.slideToLoop(scene - 1);
           else swiper.slideToLoop(0);
@@ -26,13 +37,13 @@ export default function MiniCoverflowSwiperFeed({ images }) {
     };
     window.addEventListener("message", handlePostMessage);
     return () => window.removeEventListener("message", handlePostMessage);
-  }, []);
+  }, [images]);
 
-  const handleSlideClick = (index) => {
+  const handleSlideClick = (index, url, title, explanation) => {
     const newIndex = index + 1;
     console.log("Slide clicked, real index:", newIndex); // Debug log
     if (swiperRef.current.swiper) swiperRef.current.swiper.slideToLoop(index);
-    window.parent.postMessage({ index: newIndex, source: "loop" }, "*");
+    window.parent.postMessage({ index: newIndex, url, title, explanation, source: "feedmain" }, "*");
   };
 
   useEffect(() => {
@@ -61,7 +72,7 @@ export default function MiniCoverflowSwiperFeed({ images }) {
           <SwiperSlide
             key={index}
             className={styles.swiperSlide}
-            onClick={() => handleSlideClick(index)}
+            onClick={() => handleSlideClick(index, image.url, image.title, image.explanation)}
           >
             <a href="#" onClick={(e) => e.preventDefault()}>
               {image.media_type === "video" ? (
