@@ -71,3 +71,71 @@
 
 // // Dispatch custom event with data
 // window.dispatchEvent(new CustomEvent('passData', { detail: { url, title, explanation  }}));
+
+
+// const user = 'RaydenDarkus';
+// const repo = 'feed';
+// const filePath = 'data/swiper-data.json'
+// const GITHUB_TOKEN= GITHUB_TOKEN;
+// const GITHUB_RAW_URL = `https://raw.githubusercontent.com/${user}/${repo}/main/${filePath}`;
+// const GITHUB_API_URL = `https://api.github.com/repos/${user}/${repo}/contents/data/${filePath}`;
+
+// async function updateGitHubFile(content) {
+//   try {
+//     const getFileResponse = await fetch(GITHUB_API_URL, {
+//         headers: {
+//           'Authorization': `token ${GITHUB_TOKEN}`, 
+//           'Accept': 'application/vnd.github.v3+json'
+//         }
+//     });
+//     if (!getFileResponse.ok) {
+//         throw new Error('Failed to fetch file info');
+//     }
+//     const fileData = await getFileResponse.json();
+//     console.log(fileData);
+//     // Update the file
+//     const updateResponse = await fetch(GITHUB_API_URL, {
+//         method: 'PUT',
+//         headers: {
+//           'Authorization': `token ${GITHUB_TOKEN}`,
+//           'Accept': 'application/vnd.github.v3+json'
+//         },
+//         body: JSON.stringify({
+//           message: 'Update swiper data',
+//           content: btoa(JSON.stringify(content, null, 2)), 
+//           sha: fileData.sha,
+//           branch: 'main'
+//         })
+//     });
+//     if (!updateResponse.ok) {
+//         throw new Error('Failed to update file');
+//     }
+//     console.log('GitHub file updated successfully');
+//   } catch (error) {
+//     console.error('Error updating GitHub file:', error);
+//   }
+// }
+
+// fetch(GITHUB_RAW_URL)
+// .then(response => response.json())
+// .then(currentContent => {
+//     const newEntry = { 
+//       id: currentContent.length + 1, 
+//       url, 
+//       title, 
+//       explanation, 
+//       timestamp: new Date().toISOString() 
+//     };
+//     updateGitHubFile([...currentContent, newEntry]);
+// })
+// .catch(error => {
+//     console.error("Cannot create entry.");
+// });
+
+//   // Function to clear GitHub file on page unload
+//   function clearGitHubFile() {
+//     updateGitHubFile([]);
+//   }
+
+// window.addEventListener("unload", clearGitHubFile);
+// window.removeEventListener("unload", clearGitHubFile);
