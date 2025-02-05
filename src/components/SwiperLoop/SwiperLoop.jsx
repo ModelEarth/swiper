@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
-import React, { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -12,6 +11,8 @@ import { allowedOrigins, handleIframeInteraction } from "../../utils/utils";
 export default function SwiperLoop({ images }) {
   const swiperRef = useRef(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [lightboxImage, setLightboxImage] = useState(null);
+  const [lightboxMediaType, setLightboxMediaType] = useState(null);
 
   useEffect(() => {
     const checkDarkMode = () =>
@@ -53,7 +54,9 @@ export default function SwiperLoop({ images }) {
     return () => window.removeEventListener("message", handlePostMessage);
   }, [images]);
 
-  const handleSlideClick = (index, url, title, explanation) => {
+  const handleSlideClick = (index, url, title, explanation, mediaType) => {
+    setLightboxImage(url);
+    setLightboxMediaType(mediaType);
     const newIndex = index + 1;
     console.log("Slide clicked, real index:", newIndex); // Debug log
     if (swiperRef.current.swiper) swiperRef.current.swiper.slideToLoop(index);
@@ -103,7 +106,13 @@ export default function SwiperLoop({ images }) {
             key={index}
             className={styles.swiperSlide}
             onClick={() =>
-              handleSlideClick(index, image.url, image.title, image.explanation)
+              handleSlideClick(
+                index,
+                image.url,
+                image.title,
+                image.explanation,
+                image.media_type
+              )
             }
           >
             <a href="#" onClick={(e) => e.preventDefault()}>
@@ -117,6 +126,25 @@ export default function SwiperLoop({ images }) {
           </SwiperSlide>
         ))}
       </Swiper>
+      {/* Lightbox */}
+      {lightboxImage && (
+        <div className={styles.lightbox} onClick={() => setLightboxImage(null)}>
+          {lightboxMediaType === "video" ? (
+            <iframe
+              className={styles.lightboxImg}
+              src={lightboxImage}
+              alt="Enlarged Video"
+              allowFullScreen
+            />
+          ) : (
+            <img
+              className={styles.lightboxImg}
+              src={lightboxImage}
+              alt="Enlarged Image"
+            />
+          )}
+        </div>
+      )}
     </div>
   );
 }

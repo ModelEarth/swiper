@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
@@ -11,6 +11,8 @@ import { allowedOrigins, handleIframeInteraction } from "../../utils/utils";
 
 export default function CoverFlowSwiperFeed({ images }) {
   const swiperRef = useRef(null);
+  const [lightboxImage, setLightboxImage] = useState(null);
+  const [lightboxMediaType, setLightboxMediaType] = useState(null);
 
   useEffect(() => {
     const handlePostMessage = (event) => {
@@ -40,11 +42,16 @@ export default function CoverFlowSwiperFeed({ images }) {
     return () => window.removeEventListener("message", handlePostMessage);
   }, [images]);
 
-  const handleSlideClick = (index, url, title, explanation) => {
+  const handleSlideClick = (index, url, title, explanation, mediaType) => {
+    setLightboxImage(url);
+    setLightboxMediaType(mediaType);
     const newIndex = index + 1;
-    console.log("Slide clicked, real index:", newIndex); 
+    console.log("Slide clicked, real index:", newIndex);
     if (swiperRef.current.swiper) swiperRef.current.swiper.slideToLoop(index);
-    window.parent.postMessage({ index: newIndex, url, title, explanation, source: "feedmain" }, "*");
+    window.parent.postMessage(
+      { index: newIndex, url, title, explanation, source: "feedmain" },
+      "*"
+    );
   };
 
   useEffect(() => {
@@ -80,7 +87,9 @@ export default function CoverFlowSwiperFeed({ images }) {
           <SwiperSlide
             key={index}
             className={styles.swiperSlide}
-            onClick={() => handleSlideClick(index, image.url, image.title, image.explanation)}
+            onClick={() =>
+              handleSlideClick(index, image.url, image.title, image.explanation, image.media_type)
+            }
           >
             <a href="#" onClick={(e) => e.preventDefault()}>
               {image.media_type === "video" ? (
@@ -93,6 +102,25 @@ export default function CoverFlowSwiperFeed({ images }) {
           </SwiperSlide>
         ))}
       </Swiper>
+      {/* Lightbox */}
+      {lightboxImage && (
+        <div className={styles.lightbox} onClick={() => setLightboxImage(null)}>
+          {lightboxMediaType === "video" ? (
+            <iframe
+              className={styles.lightboxImg}
+              src={lightboxImage}
+              alt="Enlarged Video"
+              allowFullScreen
+            />
+          ) : (
+            <img
+              className={styles.lightboxImg}
+              src={lightboxImage}
+              alt="Enlarged Image"
+            />
+          )}
+        </div>
+      )}
     </div>
   );
 }

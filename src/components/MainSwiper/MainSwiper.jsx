@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import MySwiper from "../MySwiper/MySwiper";
 import MiniSwiper from "../MySwiper/MiniSwiper";
 import styles from "../MySwiper/MySwiper.module.css";

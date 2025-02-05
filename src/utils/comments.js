@@ -76,7 +76,7 @@
 // const user = 'RaydenDarkus';
 // const repo = 'feed';
 // const filePath = 'data/swiper-data.json'
-// const GITHUB_TOKEN= GITHUB_TOKEN;
+// const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN;
 // const GITHUB_RAW_URL = `https://raw.githubusercontent.com/${user}/${repo}/main/${filePath}`;
 // const GITHUB_API_URL = `https://api.github.com/repos/${user}/${repo}/contents/data/${filePath}`;
 

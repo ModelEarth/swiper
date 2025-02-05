@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import SwiperLoop from "../SwiperLoop/SwiperLoop";
 
 export default function Loop() {
