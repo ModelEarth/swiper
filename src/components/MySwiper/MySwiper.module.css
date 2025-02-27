@@ -91,7 +91,7 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-.lightbox {
+/* .lightbox {
   position: fixed;
   top: 0;
   left: 0;
@@ -109,7 +109,7 @@
   max-height: 80%;
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-}
+} */
 
 
 /* Responsiveness in smaller screens */

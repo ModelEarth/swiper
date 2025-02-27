@@ -11,12 +11,9 @@ import { allowedOrigins, handleIframeInteraction } from "../../utils/utils";
 export default function SwiperLoop({ images }) {
   const swiperRef = useRef(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [lightboxImage, setLightboxImage] = useState(null);
-  const [lightboxMediaType, setLightboxMediaType] = useState(null);
 
   useEffect(() => {
-    const checkDarkMode = () =>
-      setIsDarkMode(window.parent.document.body.classList.contains("dark"));
+    const checkDarkMode = () => setIsDarkMode(window.parent.document.body.classList.contains("dark"));
     checkDarkMode();
     const observer = new MutationObserver(checkDarkMode);
     observer.observe(window.parent.document.body, {
@@ -44,8 +41,7 @@ export default function SwiperLoop({ images }) {
               "*"
             );
           }
-          if (scene > 0 && scene <= 18 && swiperRef.current)
-            swiper.slideToLoop(scene - 1);
+          if (scene > 0 && scene <= 18 && swiperRef.current) swiper.slideToLoop(scene - 1);
           else swiper.slideToLoop(0);
         }
       }
@@ -55,15 +51,10 @@ export default function SwiperLoop({ images }) {
   }, [images]);
 
   const handleSlideClick = (index, url, title, explanation, mediaType) => {
-    setLightboxImage(url);
-    setLightboxMediaType(mediaType);
     const newIndex = index + 1;
     console.log("Slide clicked, real index:", newIndex); // Debug log
     if (swiperRef.current.swiper) swiperRef.current.swiper.slideToLoop(index);
-    window.parent.postMessage(
-      { index: newIndex, url, title, explanation, source: "loop" },
-      "*"
-    );
+    window.parent.postMessage({ index: newIndex, url, title, explanation, source: "loop" }, "*");
   };
 
   useEffect(() => {
@@ -71,11 +62,7 @@ export default function SwiperLoop({ images }) {
   }, [images]);
 
   return (
-    <div
-      className={`${styles.swiperLoopContainer} ${
-        isDarkMode ? styles.dark : ""
-      }`}
-    >
+    <div className={`${styles.swiperLoopContainer} ${isDarkMode ? styles.dark : ""}`}>
       <Swiper
         grabCursor={true}
         loop={images.length > 7}
@@ -105,17 +92,9 @@ export default function SwiperLoop({ images }) {
           <SwiperSlide
             key={index}
             className={styles.swiperSlide}
-            onClick={() =>
-              handleSlideClick(
-                index,
-                image.url,
-                image.title,
-                image.explanation,
-                image.media_type
-              )
-            }
+            onClick={() => handleSlideClick(index, image.url, image.title, image.explanation, image.media_type)}
           >
-            <a href="#" onClick={(e) => e.preventDefault()}>
+            <a href={image.url} target="_blank" rel="noopener noreferrer">
               {image.media_type === "video" ? (
                 <iframe src={image.url} title={image.title} allowFullScreen />
               ) : (
@@ -126,25 +105,6 @@ export default function SwiperLoop({ images }) {
           </SwiperSlide>
         ))}
       </Swiper>
-      {/* Lightbox */}
-      {lightboxImage && (
-        <div className={styles.lightbox} onClick={() => setLightboxImage(null)}>
-          {lightboxMediaType === "video" ? (
-            <iframe
-              className={styles.lightboxImg}
-              src={lightboxImage}
-              alt="Enlarged Video"
-              allowFullScreen
-            />
-          ) : (
-            <img
-              className={styles.lightboxImg}
-              src={lightboxImage}
-              alt="Enlarged Image"
-            />
-          )}
-        </div>
-      )}
     </div>
   );
 }

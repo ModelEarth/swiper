@@ -3,7 +3,7 @@
 //   window.location.hash = '#feed=nasa&scene=1';
 //   setActiveIndex(1);  // Set activeIndex to 1 on initial load or reload
 // }, []);
-  
+
 // if (!feed || isNaN(scene) || scene < 1 || scene > 9) {
 //   window.history.replaceState(null, null, '#feed=nasa&scene=1');
 // } else {
@@ -72,7 +72,6 @@
 // // Dispatch custom event with data
 // window.dispatchEvent(new CustomEvent('passData', { detail: { url, title, explanation  }}));
 
-
 // const user = 'RaydenDarkus';
 // const repo = 'feed';
 // const filePath = 'data/swiper-data.json'
@@ -84,7 +83,7 @@
 //   try {
 //     const getFileResponse = await fetch(GITHUB_API_URL, {
 //         headers: {
-//           'Authorization': `token ${GITHUB_TOKEN}`, 
+//           'Authorization': `token ${GITHUB_TOKEN}`,
 //           'Accept': 'application/vnd.github.v3+json'
 //         }
 //     });
@@ -102,7 +101,7 @@
 //         },
 //         body: JSON.stringify({
 //           message: 'Update swiper data',
-//           content: btoa(JSON.stringify(content, null, 2)), 
+//           content: btoa(JSON.stringify(content, null, 2)),
 //           sha: fileData.sha,
 //           branch: 'main'
 //         })
@@ -119,12 +118,12 @@
 // fetch(GITHUB_RAW_URL)
 // .then(response => response.json())
 // .then(currentContent => {
-//     const newEntry = { 
-//       id: currentContent.length + 1, 
-//       url, 
-//       title, 
-//       explanation, 
-//       timestamp: new Date().toISOString() 
+//     const newEntry = {
+//       id: currentContent.length + 1,
+//       url,
+//       title,
+//       explanation,
+//       timestamp: new Date().toISOString()
 //     };
 //     updateGitHubFile([...currentContent, newEntry]);
 // })
@@ -139,3 +138,13 @@
 
 // window.addEventListener("unload", clearGitHubFile);
 // window.removeEventListener("unload", clearGitHubFile);
+
+//   {lightboxImage && (
+//     <div className={styles.lightbox} onClick={() => setLightboxImage(null)}>
+//       {lightboxMediaType === "video" ? (
+//         <iframe className={styles.lightboxImg} src={lightboxImage} alt="Enlarged Video" allowFullScreen />
+//       ) : (
+//         <img className={styles.lightboxImg} src={lightboxImage} alt="Enlarged Image" />
+//       )}
+//     </div>
+//   )
