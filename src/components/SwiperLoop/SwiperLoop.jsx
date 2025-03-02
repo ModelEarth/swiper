@@ -54,7 +54,7 @@ export default function SwiperLoop({ images }) {
     const newIndex = index + 1;
     console.log("Slide clicked, real index:", newIndex); // Debug log
     if (swiperRef.current.swiper) swiperRef.current.swiper.slideToLoop(index);
-    window.parent.postMessage({ index: newIndex, url, title, explanation, source: "loop" }, "*");
+    window.parent.postMessage({ index: newIndex, url, title, explanation, mediaType, source: "loop" }, "*");
   };
 
   useEffect(() => {
@@ -94,7 +94,7 @@ export default function SwiperLoop({ images }) {
             className={styles.swiperSlide}
             onClick={() => handleSlideClick(index, image.url, image.title, image.explanation, image.media_type)}
           >
-            <a href={image.url} target="_blank" rel="noopener noreferrer">
+            <a href="#" onClick={(e) => e.preventDefault()}>
               {image.media_type === "video" ? (
                 <iframe src={image.url} title={image.title} allowFullScreen />
               ) : (

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
@@ -43,7 +43,7 @@ export default function CoverFlowSwiperFeed({ images }) {
     const newIndex = index + 1;
     console.log("Slide clicked, real index:", newIndex);
     if (swiperRef.current.swiper) swiperRef.current.swiper.slideToLoop(index);
-    window.parent.postMessage({ index: newIndex, url, title, explanation, source: "feedmain" }, "*");
+    window.parent.postMessage({ index: newIndex, url, title, explanation, mediaType, source: "feedmain" }, "*");
   };
 
   useEffect(() => {
@@ -81,7 +81,7 @@ export default function CoverFlowSwiperFeed({ images }) {
             className={styles.swiperSlide}
             onClick={() => handleSlideClick(index, image.url, image.title, image.explanation, image.media_type)}
           >
-            <a href={image.url} target="_blank" rel="noopener noreferrer">
+            <a href="#" onClick={(e) => e.preventDefault()}>
               {image.media_type === "video" ? (
                 <iframe src={image.url} title={image.title} allowFullScreen />
               ) : (
