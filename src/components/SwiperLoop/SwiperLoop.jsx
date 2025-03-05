@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
-import React, { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -14,8 +13,7 @@ export default function SwiperLoop({ images }) {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
-    const checkDarkMode = () =>
-      setIsDarkMode(window.parent.document.body.classList.contains("dark"));
+    const checkDarkMode = () => setIsDarkMode(window.parent.document.body.classList.contains("dark"));
     checkDarkMode();
     const observer = new MutationObserver(checkDarkMode);
     observer.observe(window.parent.document.body, {
@@ -31,22 +29,32 @@ export default function SwiperLoop({ images }) {
         const { action, scene } = event.data;
         if (action === "changeSlide" && !isNaN(scene)) {
           const swiper = swiperRef.current.swiper;
-          console.log("Scene: " + scene);
-          if (scene > 0 && scene <= 18 && swiperRef.current)
-            swiper.slideToLoop(scene - 1);
+          const image = images[scene - 1];
+          if (image) {
+            window.parent.postMessage(
+              {
+                url: image.url,
+                title: image.title,
+                explanation: image.explanation,
+                source: "loop",
+              },
+              "*"
+            );
+          }
+          if (scene > 0 && scene <= 18 && swiperRef.current) swiper.slideToLoop(scene - 1);
           else swiper.slideToLoop(0);
         }
       }
     };
     window.addEventListener("message", handlePostMessage);
     return () => window.removeEventListener("message", handlePostMessage);
-  }, []);
+  }, [images]);
 
-  const handleSlideClick = (index) => {
+  const handleSlideClick = (index, url, title, explanation, mediaType) => {
     const newIndex = index + 1;
     console.log("Slide clicked, real index:", newIndex); // Debug log
     if (swiperRef.current.swiper) swiperRef.current.swiper.slideToLoop(index);
-    window.parent.postMessage({ index: newIndex, source: "loop" }, "*");
+    window.parent.postMessage({ index: newIndex, url, title, explanation, mediaType, source: "loop" }, "*");
   };
 
   useEffect(() => {
@@ -54,11 +62,7 @@ export default function SwiperLoop({ images }) {
   }, [images]);
 
   return (
-    <div
-      className={`${styles.swiperLoopContainer} ${
-        isDarkMode ? styles.dark : ""
-      }`}
-    >
+    <div className={`${styles.swiperLoopContainer} ${isDarkMode ? styles.dark : ""}`}>
       <Swiper
         grabCursor={true}
         loop={images.length > 7}
@@ -88,7 +92,7 @@ export default function SwiperLoop({ images }) {
           <SwiperSlide
             key={index}
             className={styles.swiperSlide}
-            onClick={() => handleSlideClick(index)}
+            onClick={() => handleSlideClick(index, image.url, image.title, image.explanation, image.media_type)}
           >
             <a href="#" onClick={(e) => e.preventDefault()}>
               {image.media_type === "video" ? (
