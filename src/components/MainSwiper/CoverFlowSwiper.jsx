@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import MiniCoverflowSwiperFeed from "../MySwiper/MiniCoverflowSwiperFeed";
 import CoverFlowSwiperFeed from "../MySwiper/CoverFlowSwiperFeed";
+import nasaFeed from "../../assets/nasa/NasaFeed.json";
 import styles from "../MySwiper/MySwiper.module.css";
 
 export default function CoverFlowSwiper() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 800);
-  const [images, setImages] = useState([]);
+  // const [images, setImages] = useState([]);
+  // load static nasa.json directly
+  const [images, setImages] = useState(nasaFeed);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
@@ -18,7 +21,7 @@ export default function CoverFlowSwiper() {
     });
     return () => observer.disconnect();
   }, []);
-
+  /*
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 800);
     window.addEventListener("resize", handleResize);
@@ -42,7 +45,7 @@ export default function CoverFlowSwiper() {
     };
     fetchImages();
   }, []);
-
+  */
   return (
     <div className={`${isDarkMode ? styles.dark : ''}`}>
       {isMobile ? (
