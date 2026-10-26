@@ -100,3 +100,23 @@ export const postSlideInfo = (image) => {
     window.location.origin
   );
 };
+
+// Steps the swiper from the parent's lightbox arrows ({ action: "stepSlide", step: 1 or -1 }).
+// Sends the new slide in the same message as a slide click, so the lightbox shows it.
+export const stepSlide = (swiper, images, step, source) => {
+  if (!swiper || !images.length) return;
+  const index = (swiper.realIndex + step + images.length) % images.length;
+  const image = images[index];
+  swiper.slideToLoop(index);
+  window.parent.postMessage(
+    {
+      index: index + 1,
+      url: image.url,
+      title: image.title,
+      explanation: image.explanation,
+      mediaType: image.media_type,
+      source,
+    },
+    "*"
+  );
+};

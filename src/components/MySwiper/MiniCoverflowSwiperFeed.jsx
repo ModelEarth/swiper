@@ -6,7 +6,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import styles from "./MySwiper.module.css";
 import { Navigation, Pagination } from "swiper/modules";
-import { allowedOrigins, handleIframeInteraction } from "../../utils/utils";
+import { allowedOrigins, handleIframeInteraction, stepSlide } from "../../utils/utils";
 import SlideMedia from "./SlideMedia";
 
 export default function MiniCoverflowSwiperFeed({ images }) {
@@ -15,7 +15,7 @@ export default function MiniCoverflowSwiperFeed({ images }) {
   useEffect(() => {
     const handlePostMessage = (event) => {
       if (allowedOrigins.includes(event.origin)) {
-        const { action, scene } = event.data;
+        const { action, scene, step } = event.data;
         if (action === "changeSlide" && !isNaN(scene)) {
           const swiper = swiperRef.current.swiper;
           const image = images[scene - 1];
@@ -32,6 +32,8 @@ export default function MiniCoverflowSwiperFeed({ images }) {
           }
           if (scene > 0 && scene <= 18 && swiperRef.current) swiper.slideToLoop(scene - 1);
           else swiper.slideToLoop(0);
+        } else if (action === "stepSlide" && (step === 1 || step === -1)) {
+          stepSlide(swiperRef.current?.swiper, images, step, "feedmain");
         }
       }
     };
