@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import MySwiper from "../MySwiper/MySwiper";
 import MiniSwiper from "../MySwiper/MiniSwiper";
 import styles from "../MySwiper/MySwiper.module.css";
+import { fetchNasaImages } from "../../utils/utils";
 
 export default function MainSwiper() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 800);
@@ -27,26 +28,13 @@ export default function MainSwiper() {
   }, []);
 
   useEffect(() => {
-    const fetchImages = async () => {
-      try {
-        const response = await fetch(
-          "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&hd=True&count=10"
-        );
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setImages(data);
-      } catch (error) {
-        console.error("Failed to fetch images: " + error);
-      }
-    };
-    fetchImages();
+    fetchNasaImages(10).then(setImages);
   }, []);
 
   return (
     <div className={`${isDarkMode ? styles.dark : ""}`}>
-      {isMobile ? <MiniSwiper images={images} /> : <MySwiper images={images} />}
+      {/* Wait for images so Swiper starts in loop mode, centered on the first slide */}
+      {images.length > 0 && (isMobile ? <MiniSwiper images={images} /> : <MySwiper images={images} />)}
     </div>
   );
 }

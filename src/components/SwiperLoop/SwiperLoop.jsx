@@ -7,6 +7,7 @@ import "swiper/css/pagination";
 import styles from "./SwiperLoop.module.css";
 import { Navigation, Pagination } from "swiper/modules";
 import { allowedOrigins, handleIframeInteraction } from "../../utils/utils";
+import SlideMedia from "../MySwiper/SlideMedia";
 
 export default function SwiperLoop({ images }) {
   const swiperRef = useRef(null);
@@ -95,11 +96,7 @@ export default function SwiperLoop({ images }) {
             onClick={() => handleSlideClick(index, image.url, image.title, image.explanation, image.media_type)}
           >
             <a href="#" onClick={(e) => e.preventDefault()}>
-              {image.media_type === "video" ? (
-                <iframe src={image.url} title={image.title} allowFullScreen />
-              ) : (
-                <img src={image.url} alt={image.title || "Slide Image"} />
-              )}
+              <SlideMedia image={image} />
               <p>{image.title}</p>
             </a>
           </SwiperSlide>

@@ -7,7 +7,8 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import styles from "./MySwiper.module.css";
 import { EffectCoverflow, Navigation, Pagination } from "swiper/modules";
-import { handleIframeInteraction } from "../../utils/utils";
+import { handleIframeInteraction, postSlideInfo } from "../../utils/utils";
+import SlideMedia from "./SlideMedia";
 
 export default function MySwiper({ images }) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -50,6 +51,10 @@ export default function MySwiper({ images }) {
     console.log(`activeIndex updated: ${activeIndex}`);
   }, [activeIndex]);
 
+  useEffect(() => {
+    postSlideInfo(images[activeIndex - 1]);
+  }, [activeIndex, images]);
+
   // For videos this will be the configuration as grabbing is not allowed for it
   useEffect(() => {
     handleIframeInteraction();
@@ -84,11 +89,7 @@ export default function MySwiper({ images }) {
         {images.map((image, index) => (
           <SwiperSlide key={index} className={styles.swiperSlide}>
             <a href={image.url} target="_blank" rel="noopener noreferrer">
-              {image.media_type === "video" ? (
-                <iframe src={image.url} title={image.title} allowFullScreen />
-              ) : (
-                <img src={image.url} alt={image.title || "Slide Image"} />
-              )}
+              <SlideMedia image={image} />
               <p>{image.title}</p>
             </a>
           </SwiperSlide>
