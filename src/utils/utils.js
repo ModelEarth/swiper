@@ -94,9 +94,9 @@ export const fetchNasaImages = async (count) => {
 // Sends the centered slide's APOD day to the parent page, which shows it under the gallery.
 export const postSlideInfo = (image) => {
   if (!image || window.parent === window) return;
-  const { date, title, explanation, copyright, permalink, media_type } = image;
+  const { date, title, explanation, copyright, permalink, media_type, url } = image;
   window.parent.postMessage(
-    { source: "nasa-swiper", date, title, explanation, copyright, permalink, media_type },
+    { source: "nasa-swiper", date, title, explanation, copyright, permalink, media_type, url },
     window.location.origin
   );
 };
