@@ -14,6 +14,15 @@
   background-color: #444;
 }
 
+/* In the coverflow, side slides sit behind the flat .swiper-wrapper in 3D, so on wide screens the wrapper took their clicks.
+   The wrapper ignores the pointer and the slides take it. Swiper listens for drags on the container, so dragging still works. */
+.mySwiper :global(.swiper-wrapper) {
+  pointer-events: none;
+}
+.mySwiper :global(.swiper-slide) {
+  pointer-events: auto;
+}
+
 .swiperSlide {
   background-position: center;
   background-size: cover;

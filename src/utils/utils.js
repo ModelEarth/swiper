@@ -101,6 +101,23 @@ export const postSlideInfo = (image) => {
   );
 };
 
+// When the parent page asks for it with ?select=parent in the swiper's URL, clicking a slide sends it to the parent
+// (action: "select") instead of opening the image in a new tab. /home/ shows it beside its "Ask an SI" prompt.
+// Ctrl, Cmd, Shift and middle clicks still open the image. A side slide also slides to the center.
+const selectInParent =
+  window.parent !== window && new URLSearchParams(window.location.search).get("select") === "parent";
+export const handleSlideClick = (event, image, index, swiper) => {
+  if (!selectInParent || !image) return;
+  if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+  event.preventDefault();
+  if (swiper && swiper.realIndex !== index) swiper.slideToLoop(index);
+  const { date, title, explanation, copyright, permalink, media_type, url } = image;
+  window.parent.postMessage(
+    { source: "nasa-swiper", action: "select", date, title, explanation, copyright, permalink, media_type, url },
+    window.location.origin
+  );
+};
+
 // Steps the swiper from the parent's lightbox arrows ({ action: "stepSlide", step: 1 or -1 }).
 // Sends the new slide in the same message as a slide click, so the lightbox shows it.
 export const stepSlide = (swiper, images, step, source) => {
