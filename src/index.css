@@ -17,3 +17,8 @@ body {
   margin: 0;
   padding: 0;
 }
+
+/* Matches .dark .mySwiper, set when the parent page is dark (MainSwiper.jsx) */
+body.dark {
+  background: #444;
+}

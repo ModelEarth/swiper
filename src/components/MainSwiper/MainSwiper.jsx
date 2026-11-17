@@ -10,8 +10,12 @@ export default function MainSwiper() {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
-    const checkDarkMode = () =>
-      setIsDarkMode(window.parent.document.body.classList.contains("dark"));
+    const checkDarkMode = () => {
+      const dark = window.parent.document.body.classList.contains("dark");
+      setIsDarkMode(dark);
+      // The page behind the swiper also goes dark (index.css), so no light edge shows below it
+      document.body.classList.toggle("dark", dark);
+    };
     checkDarkMode();
     const observer = new MutationObserver(checkDarkMode);
     observer.observe(window.parent.document.body, {
